@@ -1,42 +1,15 @@
 #include "server.h"
+#include "socket.h"
 
 #include <iostream>
 #include <sstream>
 
 namespace
 {
-  void initialiseWebsocket(SOCKET *serverSocket)
-  {
-    WSADATA wsaData;
-    int wsaerr;
-    WORD wVersionRequested = MAKEWORD(2, 2);
-    wsaerr = WSAStartup(wVersionRequested, &wsaData);
-
-    if (wsaerr != 0)
-    {
-      throw std::runtime_error{"The Winsock dll not found!"};
-    }
-    std::cout << "The Winsock dll found" << std::endl;
-    std::cout << "The status: " << wsaData.szSystemStatus << std::endl;
-
-    *serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-    if (*serverSocket == INVALID_SOCKET)
-    {
-      std::ostringstream error;
-      error << "Error at socket(): " << WSAGetLastError();
-      WSACleanup();
-      throw std::runtime_error{error.str()};
-    }
-    std::cout << "Socket is OK!" << std::endl;
-  }
 
   void bindSocket(const std::string &serverAddress, const uint16_t serverPort, SOCKET *serverSocket)
   {
-    sockaddr_in service;
-    service.sin_family = AF_INET;
-    service.sin_addr.s_addr = inet_addr(serverAddress.c_str());
-    service.sin_port = htons(serverPort);
+    sockaddr_in service{sock::socketAddress(serverAddress, serverPort)};
 
     if (bind(*serverSocket, reinterpret_cast<SOCKADDR *>(&service), sizeof(service)) == SOCKET_ERROR)
     {
@@ -76,29 +49,12 @@ namespace
 
   const std::string receiveRequest(SOCKET *acceptSocket)
   {
-    char receiveBuffer[200];
-    int rbyteCount = recv(*acceptSocket, receiveBuffer, 200, 0);
-    if (rbyteCount < 0)
-    {
-      std::ostringstream error;
-      error << "Server recv error: " << WSAGetLastError();
-      throw std::runtime_error{error.str()};
-    }
-    std::cout << "Received data: " << receiveBuffer << std::endl;
-
-    return {receiveBuffer, (uint16_t)rbyteCount};
+    return sock::receiveMessage(acceptSocket);
   }
 
   void sendResponse(const std::string response, SOCKET *acceptSocket)
   {
-    int sbyteCount = send(*acceptSocket, response.c_str(), response.length(), 0);
-    if (sbyteCount == SOCKET_ERROR)
-    {
-      std::ostringstream error;
-      error << "Server send error: " << WSAGetLastError();
-      throw std::runtime_error{error.str()};
-    }
-    std::cout << "Server: Sent " << sbyteCount << " bytes" << std::endl;
+    sock::sendMessage(response, acceptSocket);
   }
 
 }
@@ -109,7 +65,7 @@ namespace server
   Socket::Socket(const std::string &serverAddress, const uint16_t serverPort)
   {
     SOCKET serverSocket{INVALID_SOCKET};
-    initialiseWebsocket(&serverSocket);
+    sock::initialiseWebsocket(&serverSocket);
     bindSocket(serverAddress, serverPort, &serverSocket);
     mAcceptSocket = acceptConnections(&serverSocket);
   }
