@@ -1,3 +1,4 @@
+add_subdirectory(socket)
 
-add_executable(main main.cpp)
-target_link_libraries(main PRIVATE)
+add_executable(client client.cpp)
+target_link_libraries(client PRIVATE socket)
