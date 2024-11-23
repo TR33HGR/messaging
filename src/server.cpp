@@ -6,7 +6,7 @@ int main()
 {
   try
   {
-    server::Socket serverSocket{"192.168.0.249", 5000};
+    server::Socket serverSocket{"127.0.0.1", 5000};
     serverSocket.receive();
   }
   catch (std::runtime_error e)
