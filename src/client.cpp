@@ -13,7 +13,7 @@ int main()
 
   try
   {
-    sock::Client clientSocket{"127.0.0.1", 5000};
+    sock::Client clientSocket{"192.168.0.249", 5000};
     while (true)
     {
       clientSocket.sendMessage(rpcRequest);
