@@ -4,5 +4,5 @@ using namespace std::chrono_literals;
 
 TEST(zero, is_false)
 {
-  ASSERT_FALSE(0);
+  ASSERT_FALSE(1);
 }

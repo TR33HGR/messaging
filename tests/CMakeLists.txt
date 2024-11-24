@@ -11,7 +11,4 @@ FetchContent_MakeAvailable(googletest)
 
 include_directories(tools)
 
-add_executable(test_main test_main.cpp)
-target_link_libraries(test_main PRIVATE gtest_main gmock_main)
-
-add_test(all_tests test_main)
+add_subdirectory(socket)
