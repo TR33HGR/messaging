@@ -8,6 +8,7 @@ namespace sock
 {
   namespace test
   {
+    using ::testing::Return;
 
     TEST(a_client, connects_to_specified_server_on_creation)
     {
@@ -19,6 +20,32 @@ namespace sock
       EXPECT_CALL(*mockSocket, connectToServer(serverAddress, serverPort)).Times(1);
 
       Client client{serverAddress, serverPort, std::move(socket)};
+    }
+
+    TEST(a_client, sends_messages_to_the_socket_on_sendMessage)
+    {
+      std::unique_ptr<MockSocket> socket = std::make_unique<MockSocket>();
+      MockSocket *mockSocket = socket.get();
+      Client client{"127.0.0.1", 5000, std::move(socket)};
+      const std::string message{"test message"};
+
+      EXPECT_CALL(*mockSocket, sendMessage(message)).Times(1);
+
+      client.sendMessage(message);
+    }
+
+    TEST(a_client, reads_message_from_socket_on_receiveMessage)
+    {
+      std::unique_ptr<MockSocket> socket = std::make_unique<MockSocket>();
+      MockSocket *mockSocket = socket.get();
+      Client client{"127.0.0.1", 5000, std::move(socket)};
+      const std::string message{"test message"};
+
+      EXPECT_CALL(*mockSocket, receiveMessage()).Times(1).WillOnce(Return(message));
+
+      const auto receivedMessage = client.receiveMessage();
+
+      EXPECT_EQ(message, receivedMessage);
     }
   }
 
