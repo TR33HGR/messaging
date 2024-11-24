@@ -12,7 +12,7 @@ namespace sock
   class Server
   {
   public:
-    Server(const std::string &serverAddress, const uint16_t serverPort);
+    Server(const std::string &serverAddress, const uint16_t serverPort, std::unique_ptr<ISocket>);
 
     Connection acceptConnection();
 

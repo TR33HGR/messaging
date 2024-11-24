@@ -30,7 +30,7 @@ int main()
   std::vector<std::thread> threadPool;
   try
   {
-    sock::Server serverSocket{"192.168.0.249", 5000};
+    sock::Server serverSocket{"192.168.0.249", 5000, std::make_unique<sock::Socket>()};
     while (true)
     {
       std::future<sock::Connection> connectionMade = std::async(std::launch::async, [&]

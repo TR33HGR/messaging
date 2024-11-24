@@ -4,8 +4,8 @@
 namespace sock
 {
 
-  Server::Server(const std::string &serverAddress, const uint16_t serverPort)
-      : mServerSocket{std::make_unique<Socket>()}
+  Server::Server(const std::string &serverAddress, const uint16_t serverPort, std::unique_ptr<ISocket> s)
+      : mServerSocket{std::move(s)}
   {
     mServerSocket->bindAsServer(serverAddress, serverPort);
   }
