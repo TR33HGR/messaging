@@ -1,19 +1,24 @@
 #pragma once
 
-#include <winsock2.h>
+#include "socket.h"
+
 #include <string>
 
-namespace client
+namespace sock
 {
-
-  class Socket
+  namespace client
   {
-  public:
-    Socket(const std::string &serverAddress, const uint16_t serverPort);
-    const std::string send(const std::string &request);
 
-  private:
-    SOCKET mClientSocket;
-  };
+    class Socket
+    {
+    public:
+      Socket(const std::string &serverAddress, const uint16_t serverPort);
+      void sendMessage(const std::string &request);
+      const std::string receiveMessage();
 
+    private:
+      sock::Socket mClientSocket;
+    };
+
+  }
 }

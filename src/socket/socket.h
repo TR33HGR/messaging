@@ -5,11 +5,24 @@
 
 namespace sock
 {
+  class Socket
+  {
+  public:
+    Socket();
+    Socket(SOCKET);
 
-  void initialiseWebsocket(SOCKET *);
-  const std::string receiveMessage(SOCKET *);
-  void sendMessage(const std::string message, SOCKET *);
+    const std::string receiveMessage();
+    void sendMessage(const std::string message);
 
-  const sockaddr_in socketAddress(const std::string &address, const uint16_t port);
+    // client
+    void connectToServer(const std::string &address, const uint16_t port);
+
+    // server
+    void bindAsServer(const std::string &serverAddress, const uint16_t serverPort);
+    Socket acceptConnections();
+
+  private:
+    SOCKET mSocket;
+  };
 
 }

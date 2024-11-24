@@ -6,8 +6,11 @@ int main()
 {
   try
   {
-    server::Socket serverSocket{"127.0.0.1", 5000};
-    serverSocket.receive();
+    sock::server::Socket serverSocket{"127.0.0.1", 5000};
+    const std::string request{serverSocket.receiveMessage()};
+    std::cout << "Request: " << request << std::endl;
+
+    serverSocket.sendMessage("Ok");
   }
   catch (std::runtime_error e)
   {
