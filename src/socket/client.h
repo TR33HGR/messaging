@@ -15,7 +15,7 @@ namespace sock
     const std::string receiveMessage();
 
   private:
-    sock::Socket mClientSocket;
+    std::unique_ptr<sock::ISocket> mClientSocket;
   };
 
 }

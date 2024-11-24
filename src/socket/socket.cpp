@@ -95,7 +95,7 @@ namespace sock
     std::cout << "listen() is OK!" << std::endl;
   }
 
-  Socket Socket::acceptConnection()
+  std::unique_ptr<ISocket> Socket::acceptConnection()
   {
     SOCKET acceptSocket;
     acceptSocket = accept(mSocket, nullptr, nullptr);
@@ -108,7 +108,7 @@ namespace sock
       throw std::runtime_error{error.str()};
     }
     std::cout << "accept() is OK!" << std::endl;
-    return {acceptSocket};
+    return std::make_unique<Socket>(acceptSocket);
   }
 
   const std::string Socket::receiveMessage()
@@ -126,7 +126,7 @@ namespace sock
     return {receiveBuffer, (uint16_t)rbyteCount};
   }
 
-  void Socket::sendMessage(const std::string message)
+  void Socket::sendMessage(const std::string &message)
   {
     int sbyteCount = send(mSocket, message.c_str(), message.length(), 0);
     if (sbyteCount == SOCKET_ERROR)

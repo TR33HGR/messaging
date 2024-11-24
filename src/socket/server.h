@@ -3,6 +3,7 @@
 #include "socket.h"
 
 #include <string>
+#include <memory>
 
 namespace sock
 {
@@ -16,17 +17,17 @@ namespace sock
     Connection acceptConnection();
 
   private:
-    sock::Socket mServerSocket;
+    std::unique_ptr<ISocket> mServerSocket;
   };
 
   class Connection
   {
   public:
-    Connection(sock::Socket);
+    Connection(std::unique_ptr<ISocket>);
     const std::string receiveMessage();
     void sendMessage(const std::string &message);
 
   private:
-    sock::Socket mAcceptSocket;
+    std::unique_ptr<ISocket> mAcceptSocket;
   };
 }
