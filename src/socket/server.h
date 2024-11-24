@@ -12,8 +12,6 @@ namespace sock
   {
   public:
     Server(const std::string &serverAddress, const uint16_t serverPort);
-    const std::string receiveMessage();
-    void sendMessage(const std::string &message);
 
     Connection acceptConnection();
 
