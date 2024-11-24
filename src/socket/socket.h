@@ -19,7 +19,7 @@ namespace sock
 
     // server
     void bindAsServer(const std::string &serverAddress, const uint16_t serverPort);
-    Socket acceptConnections();
+    Socket acceptConnection();
 
   private:
     SOCKET mSocket;

@@ -95,7 +95,7 @@ namespace sock
     std::cout << "listen() is OK!" << std::endl;
   }
 
-  Socket Socket::acceptConnections()
+  Socket Socket::acceptConnection()
   {
     SOCKET acceptSocket;
     acceptSocket = accept(mSocket, nullptr, nullptr);

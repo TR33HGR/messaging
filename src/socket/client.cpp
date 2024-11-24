@@ -2,24 +2,21 @@
 
 namespace sock
 {
-  namespace client
+
+  Client::Client(const std::string &serverAddress, const uint16_t serverPort)
+      : mClientSocket{}
   {
-
-    Socket::Socket(const std::string &serverAddress, const uint16_t serverPort)
-        : mClientSocket{}
-    {
-      mClientSocket.connectToServer(serverAddress, serverPort);
-    }
-
-    void Socket::sendMessage(const std::string &message)
-    {
-      mClientSocket.sendMessage(message);
-    }
-
-    const std::string Socket::receiveMessage()
-    {
-      return mClientSocket.receiveMessage();
-    }
-
+    mClientSocket.connectToServer(serverAddress, serverPort);
   }
+
+  void Client::sendMessage(const std::string &message)
+  {
+    mClientSocket.sendMessage(message);
+  }
+
+  const std::string Client::receiveMessage()
+  {
+    return mClientSocket.receiveMessage();
+  }
+
 }

@@ -6,18 +6,29 @@
 
 namespace sock
 {
-  namespace server
+  class Connection;
+
+  class Server
   {
+  public:
+    Server(const std::string &serverAddress, const uint16_t serverPort);
+    const std::string receiveMessage();
+    void sendMessage(const std::string &message);
 
-    class Socket
-    {
-    public:
-      Socket(const std::string &serverAddress, const uint16_t serverPort);
-      const std::string receiveMessage();
-      void sendMessage(const std::string &message);
+    Connection acceptConnection();
 
-    private:
-      sock::Socket mAcceptSocket;
-    };
-  }
+  private:
+    sock::Socket mServerSocket;
+  };
+
+  class Connection
+  {
+  public:
+    Connection(sock::Socket);
+    const std::string receiveMessage();
+    void sendMessage(const std::string &message);
+
+  private:
+    sock::Socket mAcceptSocket;
+  };
 }

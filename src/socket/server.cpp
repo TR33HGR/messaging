@@ -3,25 +3,27 @@
 
 namespace sock
 {
-  namespace server
+
+  Server::Server(const std::string &serverAddress, const uint16_t serverPort)
+      : mServerSocket{}
   {
+    mServerSocket.bindAsServer(serverAddress, serverPort);
+  }
 
-    Socket::Socket(const std::string &serverAddress, const uint16_t serverPort)
-    {
-      sock::Socket serverSocket{};
-      serverSocket.bindAsServer(serverAddress, serverPort);
-      mAcceptSocket = serverSocket.acceptConnections();
-    }
+  Connection Server::acceptConnection()
+  {
+    return {mServerSocket.acceptConnection()};
+  }
 
-    const std::string Socket::receiveMessage()
-    {
-      return mAcceptSocket.receiveMessage();
-    }
+  Connection::Connection(sock::Socket s) : mAcceptSocket{s} {}
 
-    void Socket::sendMessage(const std::string &message)
-    {
-      mAcceptSocket.sendMessage(message);
-    }
+  const std::string Connection::receiveMessage()
+  {
+    return mAcceptSocket.receiveMessage();
+  }
 
+  void Connection::sendMessage(const std::string &message)
+  {
+    mAcceptSocket.sendMessage(message);
   }
 }
