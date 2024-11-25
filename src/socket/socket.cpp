@@ -31,7 +31,7 @@ namespace
     std::cout << "Socket is OK!" << std::endl;
   }
 
-  const sockaddr_in socketService(const std::string &address, const uint16_t port)
+  const sockaddr_in socketAddress(const std::string &address, const uint16_t port)
   {
     sockaddr_in service;
     service.sin_family = AF_INET;
@@ -58,7 +58,7 @@ namespace sock
 
   void Socket::connectToServer(const std::string &address, const uint16_t port)
   {
-    sockaddr_in clientService{socketService(address, port)};
+    sockaddr_in clientService{socketAddress(address, port)};
 
     if (connect(mSocket, reinterpret_cast<SOCKADDR *>(&clientService), sizeof(clientService)) == SOCKET_ERROR)
     {
@@ -73,7 +73,7 @@ namespace sock
 
   void Socket::bindAsServer(const std::string &serverAddress, const uint16_t serverPort)
   {
-    sockaddr_in service{socketService(serverAddress, serverPort)};
+    sockaddr_in service{socketAddress(serverAddress, serverPort)};
 
     if (bind(mSocket, reinterpret_cast<SOCKADDR *>(&service), sizeof(service)) == SOCKET_ERROR)
     {
