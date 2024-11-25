@@ -13,12 +13,12 @@ int main()
 
   try
   {
-    sock::Client clientSocket{"192.168.0.249", 5000, std::make_unique<sock::Socket>()};
+    std::unique_ptr<sock::Client> clientSocket = sock::createClient("192.168.0.249", 5000);
     while (true)
     {
-      clientSocket.sendMessage(rpcRequest);
+      clientSocket->sendMessage(rpcRequest);
       std::future<std::string> requestResponse = std::async(std::launch::async, [&]
-                                                            { return clientSocket.receiveMessage(); });
+                                                            { return clientSocket->receiveMessage(); });
       requestResponse.wait();
       std::cout << "Response: " << requestResponse.get() << std::endl;
 

@@ -19,4 +19,9 @@ namespace sock
     return mClientSocket->receiveMessage();
   }
 
+  std::unique_ptr<Client> createClient(const std::string &serverAddress, const uint16_t serverPort)
+  {
+    return std::make_unique<Client>(serverAddress, serverPort, std::make_unique<Socket>());
+  }
+
 }

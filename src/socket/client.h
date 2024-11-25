@@ -18,4 +18,5 @@ namespace sock
     std::unique_ptr<ISocket> mClientSocket;
   };
 
+  std::unique_ptr<Client> createClient(const std::string &serverAddress, const uint16_t serverPort);
 }
