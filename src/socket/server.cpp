@@ -26,4 +26,9 @@ namespace sock
   {
     mAcceptSocket->sendMessage(message);
   }
+
+  std::unique_ptr<Server> createServer(const std::string &serverAddress, const uint16_t serverPort)
+  {
+    return std::make_unique<Server>(serverAddress, serverPort, std::make_unique<Socket>());
+  }
 }

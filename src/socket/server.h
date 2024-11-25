@@ -30,4 +30,6 @@ namespace sock
   private:
     std::unique_ptr<ISocket> mAcceptSocket;
   };
+
+  std::unique_ptr<Server> createServer(const std::string &serverAddress, const uint16_t serverPort);
 }

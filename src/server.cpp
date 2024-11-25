@@ -30,11 +30,11 @@ int main()
   std::vector<std::thread> threadPool;
   try
   {
-    sock::Server serverSocket{"192.168.0.249", 5000, std::make_unique<sock::Socket>()};
+    std::unique_ptr<sock::Server> serverSocket = sock::createServer("192.168.0.249", 5000);
     while (true)
     {
       std::future<sock::Connection> connectionMade = std::async(std::launch::async, [&]
-                                                                { return serverSocket.acceptConnection(); });
+                                                                { return serverSocket->acceptConnection(); });
 
       connectionMade.wait();
       threadPool.emplace_back([&]()
