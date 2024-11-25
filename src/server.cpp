@@ -1,4 +1,4 @@
-#include "server.h"
+#include "serverSocket.h"
 
 #include <future>
 #include <iostream>
@@ -30,7 +30,7 @@ int main()
   std::vector<std::thread> threadPool;
   try
   {
-    std::unique_ptr<sock::Server> serverSocket = sock::createServer("192.168.0.249", 5000);
+    std::unique_ptr<sock::ServerSocket> serverSocket = sock::createServerSocket("192.168.0.249", 5000);
     while (true)
     {
       std::future<sock::Connection> connectionMade = std::async(std::launch::async, [&]

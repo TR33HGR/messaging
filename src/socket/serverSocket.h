@@ -9,10 +9,10 @@ namespace sock
 {
   class Connection;
 
-  class Server
+  class ServerSocket
   {
   public:
-    Server(const std::string &serverAddress, const uint16_t serverPort, std::unique_ptr<ISocket>);
+    ServerSocket(const std::string &serverAddress, const uint16_t serverPort, std::unique_ptr<ISocket>);
 
     Connection acceptConnection();
 
@@ -31,5 +31,5 @@ namespace sock
     std::unique_ptr<ISocket> mAcceptSocket;
   };
 
-  std::unique_ptr<Server> createServer(const std::string &serverAddress, const uint16_t serverPort);
+  std::unique_ptr<ServerSocket> createServerSocket(const std::string &serverAddress, const uint16_t serverPort);
 }

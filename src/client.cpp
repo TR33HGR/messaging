@@ -1,4 +1,4 @@
-#include "client.h"
+#include "clientSocket.h"
 
 #include <chrono>
 #include <future>
@@ -13,7 +13,7 @@ int main()
 
   try
   {
-    std::unique_ptr<sock::Client> clientSocket = sock::createClient("192.168.0.249", 5000);
+    std::unique_ptr<sock::IClientSocket> clientSocket = sock::createClientSocket("192.168.0.249", 5000);
     while (true)
     {
       clientSocket->sendMessage(rpcRequest);

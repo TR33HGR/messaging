@@ -1,4 +1,4 @@
-#include "client.h"
+#include "clientSocket.h"
 
 #include "mockSocket.h"
 
@@ -19,14 +19,14 @@ namespace sock
 
       EXPECT_CALL(*mockSocket, connectToServer(serverAddress, serverPort)).Times(1);
 
-      Client client{serverAddress, serverPort, std::move(socket)};
+      ClientSocket client{serverAddress, serverPort, std::move(socket)};
     }
 
     TEST(a_client, sends_messages_to_the_socket_on_sendMessage)
     {
       std::unique_ptr<MockSocket> socket = std::make_unique<MockSocket>();
       MockSocket *mockSocket = socket.get();
-      Client client{"127.0.0.1", 5000, std::move(socket)};
+      ClientSocket client{"127.0.0.1", 5000, std::move(socket)};
       const std::string message{"test message"};
 
       EXPECT_CALL(*mockSocket, sendMessage(message)).Times(1);
@@ -38,7 +38,7 @@ namespace sock
     {
       std::unique_ptr<MockSocket> socket = std::make_unique<MockSocket>();
       MockSocket *mockSocket = socket.get();
-      Client client{"127.0.0.1", 5000, std::move(socket)};
+      ClientSocket client{"127.0.0.1", 5000, std::move(socket)};
       const std::string message{"test message"};
 
       EXPECT_CALL(*mockSocket, receiveMessage()).Times(1).WillOnce(Return(message));

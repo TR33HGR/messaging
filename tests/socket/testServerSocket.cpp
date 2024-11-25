@@ -1,4 +1,4 @@
-#include "server.h"
+#include "serverSocket.h"
 
 #include "mockSocket.h"
 
@@ -19,14 +19,14 @@ namespace sock
 
       EXPECT_CALL(*mockSocket, bindAsServer(serverAddress, serverPort)).Times(1);
 
-      Server server{serverAddress, serverPort, std::move(socket)};
+      ServerSocket server{serverAddress, serverPort, std::move(socket)};
     }
 
     TEST(a_server, receives_a_Connection_when_a_socket_connection_is_accepted)
     {
       std::unique_ptr<MockSocket> socket = std::make_unique<MockSocket>();
       MockSocket *mockSocket = socket.get();
-      Server server{"127.0.0.1", 5000, std::move(socket)};
+      ServerSocket server{"127.0.0.1", 5000, std::move(socket)};
 
       EXPECT_CALL(*mockSocket, acceptConnection()).Times(1).WillOnce(Return(std::make_unique<MockSocket>()));
 

@@ -1,16 +1,16 @@
-#include "server.h"
+#include "serverSocket.h"
 #include "socket.h"
 
 namespace sock
 {
 
-  Server::Server(const std::string &serverAddress, const uint16_t serverPort, std::unique_ptr<ISocket> s)
+  ServerSocket::ServerSocket(const std::string &serverAddress, const uint16_t serverPort, std::unique_ptr<ISocket> s)
       : mServerSocket{std::move(s)}
   {
     mServerSocket->bindAsServer(serverAddress, serverPort);
   }
 
-  Connection Server::acceptConnection()
+  Connection ServerSocket::acceptConnection()
   {
     return {mServerSocket->acceptConnection()};
   }
@@ -27,8 +27,8 @@ namespace sock
     mAcceptSocket->sendMessage(message);
   }
 
-  std::unique_ptr<Server> createServer(const std::string &serverAddress, const uint16_t serverPort)
+  std::unique_ptr<ServerSocket> createServerSocket(const std::string &serverAddress, const uint16_t serverPort)
   {
-    return std::make_unique<Server>(serverAddress, serverPort, std::make_unique<Socket>());
+    return std::make_unique<ServerSocket>(serverAddress, serverPort, std::make_unique<Socket>());
   }
 }
