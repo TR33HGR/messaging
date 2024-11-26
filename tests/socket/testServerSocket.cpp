@@ -30,7 +30,7 @@ namespace sock
 
       EXPECT_CALL(*mockSocket, acceptConnection()).Times(1).WillOnce(Return(std::make_unique<MockSocket>()));
 
-      Connection connection = server.acceptConnection();
+      std::shared_ptr<IConnection> connection = server.acceptConnection();
     }
 
     TEST(a_connection, sends_messages_to_the_socket_on_sendMessage)

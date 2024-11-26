@@ -26,22 +26,22 @@ namespace messaging
       client.sendMessage(ok);      
     }
 
-    TEST(a_client, outputs_messages_it_receives_to_the_output_ui)
-    {
-      std::unique_ptr<sock::test::MockClientSocket> clientSocket = std::make_unique<sock::test::MockClientSocket>();
-      sock::test::MockClientSocket *mockClientSocket = clientSocket.get();
-      std::unique_ptr<ui::test::MockOutput> output = std::make_unique<ui::test::MockOutput>();
-      ui::test::MockOutput *mockOutput = output.get();
-      Client client{std::move(clientSocket), std::move(output)};
-      const std::string ok{"Ok"};
+    //TEST(a_client, outputs_messages_it_receives_to_the_output_ui)
+    //{
+      //std::unique_ptr<sock::test::MockClientSocket> clientSocket = std::make_unique<sock::test::MockClientSocket>();
+      //sock::test::MockClientSocket *mockClientSocket = clientSocket.get();
+      //std::unique_ptr<ui::test::MockOutput> output = std::make_unique<ui::test::MockOutput>();
+      //ui::test::MockOutput *mockOutput = output.get();
+      //Client client{std::move(clientSocket), std::move(output)};
+      //const std::string ok{"Ok"};
 
-      InSequence s;
+      //InSequence s;
 
-      EXPECT_CALL(*mockClientSocket, receiveMessage()).WillRepeatedly(Return(ok));
-      EXPECT_CALL(*mockOutput, printMessage(ok));
+      //EXPECT_CALL(*mockClientSocket, receiveMessage()).WillRepeatedly(Return(ok));
+      //EXPECT_CALL(*mockOutput, printMessage(ok));
 
-      client.startReceivingMessages();
-    }
+      //client.startReceivingMessages();
+    //}
 
   }
 

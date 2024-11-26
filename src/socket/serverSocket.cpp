@@ -10,9 +10,9 @@ namespace sock
     mServerSocket->bindAsServer(serverAddress, serverPort);
   }
 
-  Connection ServerSocket::acceptConnection()
+  std::shared_ptr<IConnection> ServerSocket::acceptConnection()
   {
-    return {mServerSocket->acceptConnection()};
+    return std::make_shared<Connection>(mServerSocket->acceptConnection());
   }
 
   Connection::Connection(std::unique_ptr<sock::ISocket> s) : mAcceptSocket{std::move(s)} {}
