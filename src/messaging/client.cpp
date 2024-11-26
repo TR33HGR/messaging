@@ -21,6 +21,10 @@ namespace messaging
 
   void Client::startReceivingMessages()
   {
+    if (mReceiveThread.joinable())
+    {
+      return;
+    }
     mReceiveThread = std::thread{[&]{
       try
       {
