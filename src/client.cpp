@@ -1,5 +1,6 @@
 #include "clientSocket.h"
 #include "client.h"
+#include "output.h"
 
 #include <chrono>
 #include <future>
@@ -12,7 +13,7 @@ int main()
 {
   try
   {
-    messaging::Client client{sock::createClientSocket("192.168.0.249", 5000)};
+    messaging::Client client{sock::createClientSocket("192.168.0.249", 5000), std::make_unique<ui::Output>()};
     while(true)
     {
       client.sendMessage("PING");

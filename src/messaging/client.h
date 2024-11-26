@@ -9,17 +9,25 @@ namespace sock
   class IClientSocket;
 }
 
+namespace ui
+{
+  class IOutput;
+}
+
 namespace messaging
 {
 
   class Client
   {
   public:
-    Client(std::unique_ptr<sock::IClientSocket>);
+    Client(std::unique_ptr<sock::IClientSocket>, std::unique_ptr<ui::IOutput>);
     void sendMessage(const std::string &message);
+    void startReceivingMessages();
 
   private:
     std::unique_ptr<sock::IClientSocket> mClientSocket;
-    std::future<void> mMessagesSent;
+    std::unique_ptr<ui::IOutput> mOutput;
+
+    std::thread mReceiveThread;
   };
 }
