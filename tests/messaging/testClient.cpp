@@ -10,15 +10,16 @@ namespace messaging
   {
     using ::testing::Return;
 
-    TEST(a_client, waits_for_ok_from_server_on_creation)
+    TEST(a_client, forwards_messages_to_the_client_socket_on_sendMessage)
     {
       std::unique_ptr<sock::test::MockClientSocket> clientSocket = std::make_unique<sock::test::MockClientSocket>();
       sock::test::MockClientSocket *mockClientSocket = clientSocket.get();
+      Client client{std::move(clientSocket)};
       const std::string ok{"Ok"};
 
-      EXPECT_CALL(*mockClientSocket, receiveMessage()).Times(1).WillOnce(Return(ok));
-      
-      Client client{std::move(clientSocket)};
+      EXPECT_CALL(*mockClientSocket, sendMessage(ok)).Times(1);
+
+      client.sendMessage(ok);      
     }
 
   }

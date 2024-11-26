@@ -15,7 +15,7 @@ void readMessages(sock::Connection connection)
       requestReceived.wait();
       std::cout << "Request: " << requestReceived.get() << std::endl;
 
-      connection.sendMessage("Ok");
+      //connection.sendMessage("Ok");
     }
   }
   catch (std::runtime_error e)
