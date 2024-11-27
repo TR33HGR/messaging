@@ -1,4 +1,5 @@
 #include "clientSocket.h"
+#include "socket.h"
 
 namespace sock
 {

@@ -1,11 +1,12 @@
 #pragma once
 
-#include "socket.h"
-
 #include <string>
+#include <memory>
 
 namespace sock
 {
+
+  class ISocket;
 
   class IClientSocket
   {

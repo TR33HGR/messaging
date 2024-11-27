@@ -121,7 +121,6 @@ namespace sock
       error << "Server recv error: " << WSAGetLastError();
       throw std::runtime_error{error.str()};
     }
-    std::cout << "Received data: " << receiveBuffer << std::endl;
 
     return {receiveBuffer, (uint16_t)rbyteCount};
   }
@@ -135,7 +134,6 @@ namespace sock
       error << "Server send error: " << WSAGetLastError();
       throw std::runtime_error{error.str()};
     }
-    std::cout << "Server: Sent " << sbyteCount << " bytes" << std::endl;
   }
 
 }

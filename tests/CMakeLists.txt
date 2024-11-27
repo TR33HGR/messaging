@@ -12,5 +12,3 @@ FetchContent_MakeAvailable(googletest)
 include_directories(tools)
 
 add_subdirectory(socket)
-add_subdirectory(messaging)
-add_subdirectory(ui)
